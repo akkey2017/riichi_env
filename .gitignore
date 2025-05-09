@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+
+# VSCode
+.vscode/
+
+# IDE 汎用
+*.swp
+.DS_Store
