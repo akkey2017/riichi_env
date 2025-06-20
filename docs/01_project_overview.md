@@ -42,9 +42,11 @@ git push -u origin main
 
 #### Step 3. 天鳳牌譜データ準備
 
+
 1. `data/raw/` に mjai 形式(JSON) または XML の牌譜を配置
 2. `scripts/parse_mjai_log.py` などのパーサで局面ごとの **特徴量** と
    **アクション** を抽出し保存
+
 
 #### Step 4. 特徴量エンコード / CNNモデル設計
 

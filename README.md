@@ -1,7 +1,6 @@
 # Mahjong CNN AI Project
 
 This repository demonstrates how to train a Mahjong AI using Mortal (libriichi) and convolutional neural networks.
-
 This repository contains sample code for building a Mahjong AI pipeline.
 
 * `scripts/parse_tenhou_xml.py` – convert Tenhou XML logs to a simple dataset
