@@ -1,3 +1,4 @@
 # Basic requirements
 numpy
 torch
+tqdm

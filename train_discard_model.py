@@ -5,6 +5,7 @@ import torch
 from torch import nn, optim
 from torch.utils.data import Dataset, DataLoader
 from models.discard_cnn import DiscardCNN
+from utils.mahjong import tile_to_index, parse_tiles
 
 class DiscardDataset(Dataset):
     def __init__(self, json_file: Path):
@@ -16,12 +17,24 @@ class DiscardDataset(Dataset):
 
     def __getitem__(self, idx):
         item = self.data[idx]
-        hand = torch.tensor(item['hand'], dtype=torch.long)
+        hand_tiles = item['hand']
+        if isinstance(hand_tiles, str):
+            hand_tiles = parse_tiles(hand_tiles)
+        elif isinstance(hand_tiles, list) and hand_tiles and isinstance(hand_tiles[0], int):
+            # old integer format from Tenhou parser
+            hand_tiles = [hand_tiles[i] for i in range(len(hand_tiles))]
         tiles = torch.zeros(34)
-        for t in hand:
-            tiles[t % 34] += 1
+        for t in hand_tiles:
+            if isinstance(t, int):
+                tiles[t % 34] += 1
+            else:
+                tiles[tile_to_index(t)] += 1
         x = tiles.view(1, -1, 1)  # [C, T, 1]
-        y = torch.tensor(item['tile'] % 34, dtype=torch.long)
+        target_tile = item['tile']
+        if isinstance(target_tile, int):
+            y = torch.tensor(target_tile % 34, dtype=torch.long)
+        else:
+            y = torch.tensor(tile_to_index(target_tile), dtype=torch.long)
         return x, y
 
 def train(data_path: Path, epochs: int = 5):

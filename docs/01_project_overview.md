@@ -42,8 +42,11 @@ git push -u origin main
 
 #### Step 3. 天鳳牌譜データ準備
 
-1. `data/raw/` に XML 牌譜を配置
-2. 牌譜パーサで局面ごとの **特徴量** と **アクション** を抽出し保存
+
+1. `data/raw/` に mjai 形式(JSON) または XML の牌譜を配置
+2. `scripts/parse_mjai_log.py` などのパーサで局面ごとの **特徴量** と
+   **アクション** を抽出し保存
+
 
 #### Step 4. 特徴量エンコード / CNNモデル設計
 
@@ -70,7 +73,8 @@ mahjong-cnn-ai/
 │   ├── raw/          # 天鳳牌譜（XML）
 │   └── processed/    # 学習用データ
 ├── scripts/
-│   └── parse_tenhou_xml.py
+│   ├── parse_tenhou_xml.py
+│   └── parse_mjai_log.py
 ├── models/
 │   ├── discard_cnn.py
 │   └── weights/
